@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  microservicesdemo-user:
+    environment:
+      NODE_ENV: test
+    entrypoint: /home/docker/startup.test.sh

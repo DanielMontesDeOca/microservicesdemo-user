@@ -21,7 +21,7 @@ describe('Auth controller', function() {
   describe('login', function() {
 
     it('should return error if user does not exist', function() {
-      return Gateway.login(fixtures.invalidUser())
+      return Gateway.validateCredentials(fixtures.invalidUser())
         .should.be.rejected
         .then(validate(errorSchema('Invalid credentials')));
     });
@@ -31,13 +31,13 @@ describe('Auth controller', function() {
 
       user.password = 'wrong';
 
-      return Gateway.login(user)
+      return Gateway.validateCredentials(user)
         .should.be.rejected
         .then(validate(errorSchema('Invalid credentials')));
     });
 
     it('should login successfully', function() {
-      return Gateway.login(fixtures.validUser())
+      return Gateway.validateCredentials(fixtures.validUser())
         .should.be.fulfilled
         .then(validate(loginSchema));
     });

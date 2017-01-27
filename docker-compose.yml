@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  microservicesdemo-user:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: microservicesdemo/user
+    environment:
+      PORT: 80

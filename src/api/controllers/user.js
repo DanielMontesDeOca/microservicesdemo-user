@@ -1,9 +1,9 @@
 const User = require('../models/user');
 
-function createUser({ request }, callback) {
+function create({ request }, callback) {
   const name = request.name;
-  const email = request.email;
-  const password = request.password;
+  const email = request.credentials.email;
+  const password = request.credentials.password;
   const role = 'user';
   const data = { name, email, password, role };
 
@@ -19,7 +19,7 @@ function createUser({ request }, callback) {
     .catch(callback);
 }
 
-function getUser({ request }, callback) {
+function get({ request }, callback) {
   const id = request.id;
 
   User.find({id})
@@ -38,7 +38,28 @@ function getUser({ request }, callback) {
     .catch(callback);
 }
 
+function validateCredentials({ request }, callback) {
+  const email = request.email;
+  const password = request.password;
+
+  User.find({ email, password })
+    .then(function(user) {
+      if (!user) {
+        throw new Error('Invalid credentials');
+      }
+
+      callback(null, {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      });
+    })
+    .catch(callback);
+}
+
 module.exports = {
-  createUser,
-  getUser
+  create,
+  get,
+  validateCredentials
 };
