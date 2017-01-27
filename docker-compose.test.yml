@@ -4,4 +4,4 @@ services:
   microservicesdemo-user:
     environment:
       NODE_ENV: test
-    entrypoint: /home/docker/startup.test.sh
+    entrypoint: /home/docker/startup.dev.sh
